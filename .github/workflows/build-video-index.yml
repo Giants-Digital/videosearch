@@ -108,7 +108,7 @@ jobs:
               for (let month = 1; month <= 12; month++) {
                 if (year === now.getFullYear() && month > now.getMonth() + 1) continue;
 
-                const url = `https://www.Giants.com/sitemap/html/videos/${year}/${month}`;
+                const url = `https://www.giants.com/sitemap/html/videos/${year}/${month}`;
                 console.log(`Fetching ${url}`);
 
                 try {
@@ -122,7 +122,7 @@ jobs:
 
                     const fullUrl = href.startsWith('http')
                       ? href
-                      : `https://www.Giants.com${href}`;
+                      : `https://www.giants.com${href}`;
 
                     if (!videos.has(fullUrl)) {
                       videos.set(fullUrl, { title, url: fullUrl, thumb: '', date: '', dateVerified: false });
