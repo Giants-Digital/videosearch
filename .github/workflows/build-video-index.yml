@@ -142,6 +142,28 @@ jobs:
             const overrides = [];
             overrides.forEach(v => { if (!videos.has(v.url)) videos.set(v.url, v); });
 
+            console.log('Hydrating thumbnails...');
+            
+            let hydrated = 0;
+            
+            for (const video of videos.values()) {
+            
+              if (video.thumb) continue;
+              
+              try {
+                const html = await get(video.url);
+              
+                video.thumb = extractOgImage(html);
+              
+                if (video.thumb) {
+                  hydrated++;
+                  console.log(`Thumbnail found: ${video.title}`);
+                }
+              } catch (e) {
+                console.warn(`Could not hydrate ${video.url}`);
+              }
+            }
+
             // --- Rest of script unchanged ---
             const arr = Array.from(videos.values());
             fs.writeFileSync('videos.json', JSON.stringify(arr));
