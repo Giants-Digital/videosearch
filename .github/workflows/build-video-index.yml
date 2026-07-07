@@ -141,7 +141,8 @@ jobs:
             // --- Manual overrides ---
             const overrides = [];
             overrides.forEach(v => { if (!videos.has(v.url)) videos.set(v.url, v); });
-
+            
+            console.log(`Total videos: ${videos.size}`);
             console.log('Hydrating thumbnails...');
             
             let hydrated = 0;
@@ -149,6 +150,11 @@ jobs:
             for (const video of videos.values()) {
             
               if (video.thumb) continue;
+              
+              if (hydrated >= MAX_THUMBS_PER_RUN) {
+                console.log(`Reached hydration limit of ${MAX_THUMBS_PER_RUN}`);
+                break;
+                }
               
               try {
                 const html = await get(video.url);
