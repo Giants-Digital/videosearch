@@ -197,7 +197,17 @@ jobs:
               !v.dateVerified
             ).length;
             
+            const missingDates = arr.filter(v =>
+              !v.date || !v.dateVerified
+            ).length;
+            
+            const missingThumbs = arr.filter(v =>
+              !v.thumb
+            ).length;
+            
             console.log(`VIDEOS STILL NEEDING HYDRATION: ${remaining}`);
+            console.log(`VIDEOS STILL MISSING DATES: ${missingDates}`);
+            console.log(`VIDEOS STILL MISSING THUMBNAILS: ${missingThumbs}`);
 
             fs.writeFileSync('videos.json', JSON.stringify(arr));
             console.log(`Done — ${arr.length} videos written to videos.json`);
