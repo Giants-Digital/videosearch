@@ -165,6 +165,14 @@ jobs:
                   hydrated++;
                   console.log(`Thumbnail found: ${video.title}`);
                 }
+                // Extract date too
+                const date = extractDate(html);
+                
+                if (date) {
+                  video.date = date;
+                  video.dateVerified = true;
+                }
+
               } catch (e) {
                 console.warn(`Could not hydrate ${video.url}`);
               }
