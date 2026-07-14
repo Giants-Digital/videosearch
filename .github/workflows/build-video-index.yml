@@ -20,7 +20,7 @@ jobs:
           const https = require('https');
           const fs = require('fs');
 
-          const MAX_THUMBS_PER_RUN = 10000;
+          const MAX_THUMBS_PER_RUN = 5000;
           const MAX_DATE_CORRECTIONS = 500;
           const MAX_DESC_BACKFILL = 500;
           const BATCH_SIZE = 5;
