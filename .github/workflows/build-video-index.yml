@@ -54,15 +54,25 @@ jobs:
           }
 
           function extractDate(html) {
+            // Giants video pages store the publish date in JSON-LD
+            const jsonLdMatch = html.match(/"datePublished":"([^"]+)"/);
+            
+            if (jsonLdMatch) {
+              return jsonLdMatch[1];
+            }
+            
             const d3Match = html.match(/class="d3-o-media-object__date"[^>]*>\s*([^<]+?)\s*<\//);
             if (d3Match) return d3Match[1].trim();
-
+            
             const ogMatch = html.match(/<meta[^>]+property="article:published_time"[^>]+content="([^"]+)"/);
             if (ogMatch) return ogMatch[1];
-
+            
             const timeMatch = html.match(/<time[^>]+datetime="([^"]+)"/);
-            return timeMatch ? timeMatch[1] : '';
+            if (timeMatch) return timeMatch[1];
+            
+            return '';
           }
+
 
           function extractDescription(html) {
             const ogMatch = html.match(/<meta[^>]+property="og:description"[^>]+content="([^"]+)"/) ||
