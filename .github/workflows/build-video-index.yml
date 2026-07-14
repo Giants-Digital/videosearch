@@ -167,6 +167,8 @@ jobs:
                 }
                 // Extract date too
                 const date = extractDate(html);
+
+                console.log(`DATE TEST: ${video.title} -> ${date}`);
                 
                 if (date) {
                   video.date = date;
