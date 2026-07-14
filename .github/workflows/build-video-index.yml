@@ -159,7 +159,7 @@ jobs:
             
             for (const video of videos.values()) {
             
-              if (video.thumb) continue;
+              if (video.thumb && video.date && video.dateVerified) continue;
               
               if (hydrated >= MAX_THUMBS_PER_RUN) {
                 console.log(`Reached hydration limit of ${MAX_THUMBS_PER_RUN}`);
@@ -171,9 +171,9 @@ jobs:
               
                 video.thumb = extractOgImage(html);
               
-                if (video.thumb) {
+                if (video.thumb && !video.thumbHydrated) {
                   hydrated++;
-                  console.log(`Thumbnail found: ${video.title}`);
+                  video.thumbHydrated = true;
                 }
                 // Extract date too
                 const date = extractDate(html);
