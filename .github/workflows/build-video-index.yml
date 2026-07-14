@@ -130,10 +130,11 @@ jobs:
                     const title = match[2].replace(/<[^>]+>/g, '').trim();
                     if (!href || !title) continue;
 
-                    const fullUrl = href.startsWith('http')
+                    const fullUrl = (
+                    href.startsWith('http')
                       ? href
                       : `https://www.giants.com${href}`
-                    ).toLowerCase();;
+                    ).toLowerCase();
 
                     if (!videos.has(fullUrl)) {
                       videos.set(fullUrl, { title, url: fullUrl, thumb: '', date: '', dateVerified: false });
