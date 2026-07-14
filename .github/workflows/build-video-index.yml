@@ -20,7 +20,7 @@ jobs:
           const https = require('https');
           const fs = require('fs');
 
-          const MAX_THUMBS_PER_RUN = 5000;
+          const MAX_THUMBS_PER_RUN = 10000;
           const MAX_DATE_CORRECTIONS = 500;
           const MAX_DESC_BACKFILL = 500;
           const BATCH_SIZE = 5;
@@ -190,6 +190,15 @@ jobs:
 
             // --- Rest of script unchanged ---
             const arr = Array.from(videos.values());
+            
+            const remaining = arr.filter(v =>
+              !v.thumb ||
+              !v.date ||
+              !v.dateVerified
+            ).length;
+            
+            console.log(`VIDEOS STILL NEEDING HYDRATION: ${remaining}`);
+
             fs.writeFileSync('videos.json', JSON.stringify(arr));
             console.log(`Done — ${arr.length} videos written to videos.json`);
           }
